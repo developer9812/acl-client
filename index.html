@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vue Consumer</title>
+    <style media="screen">
+      body{
+        background: whitesmoke;
+        font-family: sans-serif;
+      }
+      .container{
+        background: white;
+        margin: 1rem;
+        color: dodgerblue;
+        padding: 1rem;
+      }
+      .container .title{
+        text-align: center;
+        font-weight: 600;
+      }
+      .form-control{
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        max-width: 20rem;
+      }
+      .form-control label{
+        font-size: small;
+        color: black;
+        opacity: 0.6;
+      }
+      .form-control input{
+        border: 1px solid lightgrey;
+        padding: 0.3rem;
+        font-size: medium;
+        color: black;
+        transition: all 0.2s ease;
+      }
+      .form-control input:focus {
+        outline: none;
+        border: 1px solid dodgerblue;
+      }
+      .form-control button{
+        padding: 0.5rem;
+        background: dodgerblue;
+        color: white;
+        border: none;
+        text-transform: uppercase;
+      }
+      .form-control button:hover{
+        color: whitesmoke;
+        cursor: pointer;
+      }
+      .error{
+        color: red;
+        text-align: center;
+        font-size: small;
+      }
+      .content .code{
+        background: darkslategrey;
+        color: rgb(231, 240, 175);
+        padding: 1rem;
+        word-wrap: break-word;
+      }
+      .content .service{
+
+      }
+      .service-content{
+        padding: 1rem;
+        background: darkslategrey;
+        color: rgb(231, 240, 175);
+      }
+      .service-content-item{
+        display: flex;
+        flex-direction: row;
+      }
+      .service-content-value{
+        margin: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="app">
+      <div class="title">Vue Consumer Test</div>
+      <div class="form-control">
+        <label for="username">Username</label>
+        <input @change="authError = false" type="text" name="username" v-model="form.username">
+      </div>
+      <div class="form-control">
+        <label for="username">Password</label>
+        <input @change="authError = false" type="password" name="password" v-model="form.password">
+      </div>
+      <div class="form-control">
+        <button type="button" name="button" v-if="!serviceLoaded" @click="getToken">Get Token</button>
+      </div>
+      <div class="error" v-if="authError">
+        <span>
+          Authentication failed
+        </span>
+      </div>
+      <div class="content" v-if="authValid">
+        <div class="code" v-if="!serviceLoaded">
+          {{ accessToken }}
+        </div>
+        <div class="service">
+          <div class="form-control">
+            <button type="button" name="button" @click="tryService">Try Service</button>
+          </div>
+          <div class="service-content" v-if="serviceLoaded">
+            <div class="service-content-item" v-for="user in serviceData">
+              <div class="service-content-value">
+                {{ user.id }}
+              </div>
+              <div class="service-content-value">
+                {{ user.name }}
+              </div>
+              <div class="service-content-value">
+                {{ user.email }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="public/app.js"></script>
+  </body>
+</html>
