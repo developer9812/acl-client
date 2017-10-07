@@ -83,6 +83,9 @@
   <body>
     <div class="container" id="app">
       <div class="title">Vue Consumer Test</div>
+      <div class="" v-if="$store.getters.loading">
+        Loading ...
+      </div>
       <div class="form-control">
         <label for="username">Username</label>
         <input @change="authError = false" type="text" name="username" v-model="form.username">
@@ -107,6 +110,9 @@
           <div class="form-control">
             <button type="button" name="button" @click="tryService">Try Service</button>
           </div>
+          <div class="form-control">
+            <button type="button" name="button" @click="getRole">Get Role</button>
+          </div>
           <div class="service-content" v-if="serviceLoaded">
             <div class="service-content-item" v-for="user in serviceData">
               <div class="service-content-value">
@@ -119,6 +125,11 @@
                 {{ user.email }}
               </div>
             </div>
+          </div>
+          <div class="form-control">
+            <span v-can="'view-user'">Vue User</span>
+            <span v-can="'edit-user'">Edit User</span>
+            <span v-can="'delete-user'">Delete user</span>
           </div>
         </div>
       </div>
